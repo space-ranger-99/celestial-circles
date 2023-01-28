@@ -1,6 +1,8 @@
 clear;
 
-% Keplerian elements
+spcrft = input('Enter the name of the spacecraft: ', 's');
+
+%% Keplerian elements
 a = input('Enter the semi-major axis (km): ');
 while ~isnumeric(a) || a < 6371 || a > 200000
     disp('Error: Input must be a number between 6371 and 200000.')
@@ -37,25 +39,37 @@ while ~isnumeric(M0) || M0 < 0 || M0 > 360
     M0 = input('Enter the mean anomaly at t0 (degrees): ');
 end
 
-% Time vector for simulation
+%% Time vector for simulation
 t0 = 0; % starting time (s)
+
 tf = input('Enter the simulation run time (s): ');
+while ~isnumeric(tf) || tf <= 0
+    disp('Error: Input must be a positive number.')
+    tf = input('Enter the simulation run time (s): ');
+end
+
 dt = input('Enter the time step (s): ');
+while ~isnumeric(dt) || dt <= 0
+    disp('Error: Input must be a positive number.')
+    dt = input('Enter the time step (s): ');
+end
+
 t = t0:dt:tf; % time vector
 
-% Call initial state vector function
+%% Call initial state vector function
 X0 = initial_state(a, e, i, RAAN, w, M0);
 
-% Call ODE45 solver function
+%% Call ODE45 solver function
 [T,X] = ode45_solver(@orbit,t,X0);
 
-% Extract position data from solution
+%% Extract position data from solution
 x = X(:,1);
 y = X(:,2);
 z = X(:,3);
 
-% Plot the 3D orbit
+%% Plot the 3D orbit
 plot3(x,y,z);
 xlabel('X (km)');
 ylabel('Y (km)');
 zlabel('Z (km)');
+legend(spcrft);
