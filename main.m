@@ -4,18 +4,12 @@ clear; clc;
 mu = 398600;
 
 % Define orbital elements (classical)
-% a = input('Enter semi-major axis (km): ');
-% e = input('Enter eccentricity: ');
-% inc = deg2rad(input('Enter inclination (degrees): '));
-% RA = deg2rad(input('Enter right ascension of the ascending node (degrees): '));
-% w = deg2rad(input('Enter argument of perigee (degrees): '));
-% nu = deg2rad(input('Enter true anomaly (degrees): '));
-a = 6700; % semi-major axis (km)
-e = 0.1; % eccentricity
-inc = deg2rad(54); % inclination (rad)
-RA = deg2rad(60); % right ascension of the ascending node (rad)
-w = deg2rad(30); % argument of perigee (rad)
-nu = deg2rad(15); % true anomaly (rad)
+a = input('Enter semi-major axis (km): ');
+e = input('Enter eccentricity: ');
+inc = deg2rad(input('Enter inclination (degrees): '));
+RA = deg2rad(input('Enter right ascension of the ascending node (degrees): '));
+w = deg2rad(input('Enter argument of perigee (degrees): '));
+nu = deg2rad(input('Enter true anomaly (degrees): '));
 
 % Convert to Cartesian state vector
 r = a*(1-e^2)/(1+e*cos(nu));
@@ -30,12 +24,9 @@ vz = 0;
 X0 = [x, y, z, vx, vy, vz];
 
 % Define time interval
-% t0 = 0
-% tf = input('Enter final time (in seconds): ');
-% dt = input('Enter time step (in seconds): ');
 t0 = 0;
-tf = 24*3600;
-dt = 10000;
+tf = input('Enter final time (in seconds): ');
+dt = input('Enter time step (in seconds): ');
 t = linspace(t0, tf, dt);
 
 % Define satellite motion function
